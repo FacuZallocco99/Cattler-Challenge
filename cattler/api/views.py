@@ -89,7 +89,7 @@ class AnimalIngressView(APIView):
                 for ingress in ingresses:
                     corral_num = ingress.get('corral')
                     quantity = ingress.get('cantidad')
-                    troop_num = random.randint(1,2) # Ya que no se especifica que hacer con el numero de tropa se lo asigna de manera random
+                    troop_num = random.randint(1,100) # Ya que no se especifica que hacer con el numero de tropa se lo asigna de manera random
                     if not (isinstance(corral_num,int) and isinstance(quantity,int)):
                         return Response({'error': 'Corral o cantidad erroneos'}, status=404)
                     if quantity <= 0:
