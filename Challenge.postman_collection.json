@@ -13,7 +13,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"caravan_number\": 8,\r\n    \"RFID_number\": 1,\r\n    \"troop\": 2\r\n}",
+					"raw": "{\r\n    \"caravan_number\": 56,\r\n    \"RFID_number\": 1,\r\n    \"troop_id\": 19\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -49,7 +49,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"troop\": 2\r\n}",
+					"raw": "{\r\n    \"troop_id\": 19\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -82,7 +82,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"troop_number\": 2,\r\n    \"lot\": 1\r\n}",
+					"raw": "{\r\n    \"troop_number\": 15,\r\n    \"lot\": 5\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -110,9 +110,21 @@
 		},
 		{
 			"name": "/api/troops/get",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
 			"request": {
 				"method": "GET",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"lot\": 1\r\n}\r\n\r\n\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
 					"raw": "http://127.0.0.1:8000/api/troops/get",
 					"protocol": "http",
@@ -139,7 +151,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"lot_number\": 2\r\n}",
+					"raw": "{\r\n    \"lot_number\": 5\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -194,6 +206,15 @@
 			"request": {
 				"method": "POST",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"troop_id\": \"1\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
 					"raw": "http://127.0.0.1:8000/api/corrals/",
 					"protocol": "http",
@@ -244,7 +265,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{ \r\n    \"lote\": 1,\r\n    \"ingresos\": [\r\n        { \"corral\": 4,\r\n        \"cantidad\": 10\r\n        },\r\n        {\"corral\": 5,\r\n        \"cantidad\": 5\r\n        }\r\n    ]\r\n}\r\n",
+					"raw": "{ \r\n    \"lote\": 3,\r\n    \"ingresos\": [\r\n        { \"corral\": 17,\r\n        \"cantidad\": 2\r\n        },\r\n        {\"corral\": 18,\r\n        \"cantidad\": 1\r\n        }\r\n    ]\r\n    \r\n}\r\n",
 					"options": {
 						"raw": {
 							"language": "json"
