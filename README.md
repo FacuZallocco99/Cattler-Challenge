@@ -14,11 +14,11 @@ A continuacion se indican los endpoints para probar los diferentes puntos de la 
 	- /api/corrals/ Este endopoint con el metodo POST, crea un corral automaticamente. Recibe 'troop':'int', si se desea asignar una tropa al corral en el cuerpo de la peticion en formato JSON
 	- /api/corrals/ Este endopoint con el metodo GET, obtiene todos los corrales registrados
 	
-4 _GET y POST Lotes_
+4. _GET y POST Lotes_
 	- /api/lots/ Este endopoint con el metodo POST, crea un lote. Recibe 'lot_number':'int', para indicar el numero de lote, todo esto en el cuerpo de la peticion en formato JSON
 	- /api/lots/ Este endopoint con el metodo GET, obtiene todos los lotes registrados
 	
-5 _POST Ingreso de animales_
+5. _POST Ingreso de animales_
 	- /animals/income/ Este endpoint recibe en el cuerpo de la peticion un JSON como el indicado en el documento del challenge y registra el ingreso de animales
 	
 ****
