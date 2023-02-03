@@ -64,7 +64,7 @@ class getTroops(APIView):
                     serializable_troops = TroopSerializer(troops, many=True)
                     return Response({'data': serializable_troops.data}, status=200) 
                 else:
-                    return Response({'error': 'El numero de tropa es erroneo'}, status=404)
+                    return Response({'error': 'El numero de lote es erroneo'}, status=404)
             
             troops = Troop.objects.all()
             serializable_troops = TroopSerializer(troops, many=True)
