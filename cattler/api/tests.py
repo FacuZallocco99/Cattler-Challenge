@@ -8,6 +8,7 @@ class AnimalIngressViewTestCase(TestCase):
         self.client = Client()
         self.lot = Lot.objects.create(lot_number=1)
         self.corral = Corral.objects.create()
+        self.corral = Corral.objects.create()
 
     def test_post_ingress(self):
         # Test indicando todos los datos correctos
@@ -56,7 +57,7 @@ class AnimalIngressViewTestCase(TestCase):
         data = {
             "lote": 1,
             "ingresos": [
-                {"corral": 2, "cantidad": 3},
+                {"corral": 3, "cantidad": 3},
             ],
         }
         response = self.client.post(
@@ -121,3 +122,33 @@ class AnimalIngressViewTestCase(TestCase):
             url, data=json.dumps(data), content_type="application/json"
         )
         self.assertEqual(response.status_code, 404)
+        
+    def test_post_cantidad_cero(self):
+        # Test indicando cantidad igual a cero
+        url = "/api/animals/income/"
+        data = {
+            "lote": 1,
+            "ingresos": [
+                {"corral": 1, "cantidad": 0},
+            ],
+        }
+        response = self.client.post(
+            url, data=json.dumps(data), content_type="application/json"
+        )
+        self.assertEqual(response.status_code, 404)
+    
+    def test_post_ingress_dos_ingresos(self):
+        # Test indicando todos los datos correctos y dos ingresos
+        url = "/api/animals/income/"
+        data = {
+            "lote": 1,
+            "ingresos": [
+                {"corral": 1, "cantidad": 5},
+                {"corral": 2, "cantidad": 5},
+            ],
+        }
+        response = self.client.post(
+            url, data=json.dumps(data), content_type="application/json"
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(Animal.objects.count(), 10)

@@ -77,7 +77,7 @@ class AnimalIngressView(APIView):
     # Permite ingresar animales en el formato indicado - Chequeo de transaccion atomica
     def post(self, request, format=None):
         try:
-            with transaction.atomic():
+            with transaction.atomic(): # Cabe aclarar que SQLite es un motor de base de datos ligero y no admite transacciones completas o atomicas. Esto significa que transaction.atomic() no funcionará como se espera. 
                 lot = request.data.get('lote')
                 ingresses = request.data.get('ingresos')
                 if isinstance(lot,int) and isinstance(ingresses, list):
@@ -90,6 +90,8 @@ class AnimalIngressView(APIView):
                         quantity = ingress.get('cantidad')
                         troop_num = random.randint(1,100) # Ya que no se especifica que hacer con el numero de tropa se lo asigna de manera random
                         if isinstance(corral_num,int) and isinstance(quantity,int):
+                            if quantity <= 0:
+                                return Response({'error': 'La cantidad a ingresar no puede ser cero'}, status=404)
                             try:
                                 corral = Corral.objects.get(corral_number=corral_num)
                             except Corral.DoesNotExist:

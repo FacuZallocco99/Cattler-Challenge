@@ -7,7 +7,7 @@ urlpatterns = [
     path('troops/', TroopCreate.as_view(), name='troop-create'),
     path('troops/get', getTroops.as_view(), name='troops-get'),
     path('corrals/', CorralCreate.as_view(), name='corral-create'),
-    path('lots/', LotCreate.as_view(), name='corral-create'),
+    path('lots/', LotCreate.as_view(), name='lots-create'),
     path('animals/income/', AnimalIngressView.as_view(), name='animal-income'),
 
 ]
