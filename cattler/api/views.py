@@ -37,7 +37,7 @@ class getAnimals(APIView):
             troop = request.data.get('troop_id')
             if troop:
                 if isinstance(troop,int):
-                    animals = Animal.objects.filter(troop_id__troop_number=troop)
+                    animals = Animal.objects.filter(troop_id__pk=troop)
                     if not animals:
                         return Response({'error': 'No se encontró animales en la tropa especificada'}, status=404)
                     serializable_animals = AnimalSerializer(animals, many=True)
