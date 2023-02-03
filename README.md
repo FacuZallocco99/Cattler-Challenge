@@ -3,15 +3,15 @@ A continuacion se indican los endpoints para probar los diferentes puntos de la 
 
 **Descripción de endpoints**
 1. _GET y POST Animales_
-    - /api/animals/get  Este endpoint permite obtener todos los animales registrados. Recibe de manera opcional el parametro 'troop':'int' para filtrar por numero de tropa en el cuerpo de la peticion en formato JSON
-	- /api/animals/  Este endpoint permite registrar animales. Recibe 'caravan_number':'int', 'RFID_number':'int' y 'troop':'int' en el cuerpo de la peticion en formato JSON
+    - /api/animals/get  Este endpoint permite obtener todos los animales registrados. Recibe de manera opcional el parametro 'troop_id':'int' para filtrar por numero de tropa en el cuerpo de la peticion en formato JSON
+	- /api/animals/  Este endpoint permite registrar animales. Recibe 'caravan_number':'int', 'RFID_number':'int' y 'troop_id':'int' en el cuerpo de la peticion en formato JSON
 	
 2. _GET y POST Tropas_	
 	- /api/troops/  Este endpoint permite registrar tropas. Recibe 'troop_number':'int', 'lot':'int' en el cuerpo de la peticion en formato JSON 
 	- /api/troops/get  Este endpoint permite obtener todos las tropas registrados. Recibe de manera opcional el parametro 'lot':'int' para filtrar por lote en el cuerpo de la peticion en formato JSON
 
 3. _GET y POST Corrales_	
-	- /api/corrals/ Este endopoint con el metodo POST, crea un corral automaticamente. Recibe 'troop':'int', si se desea asignar una tropa al corral en el cuerpo de la peticion en formato JSON
+	- /api/corrals/ Este endopoint con el metodo POST, crea un corral automaticamente. Recibe 'troop_id':'int', si se desea asignar una tropa al corral en el cuerpo de la peticion en formato JSON
 	- /api/corrals/ Este endopoint con el metodo GET, obtiene todos los corrales registrados
 	
 4. _GET y POST Lotes_

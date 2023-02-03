@@ -34,10 +34,10 @@ class getAnimals(APIView):
     # Consulta animales (permite filtrar por tropa)
     def get(self, request, format=None):
         try:
-            troop = request.data.get('troop')
+            troop = request.data.get('troop_id')
             if troop:
                 if isinstance(troop,int):
-                    animals = Animal.objects.filter(troop__troop_number=troop)
+                    animals = Animal.objects.filter(troop_id__troop_number=troop)
                     if not animals:
                         return Response({'error': 'No se encontró animales en la tropa especificada'}, status=404)
                     serializable_animals = AnimalSerializer(animals, many=True)
@@ -100,7 +100,7 @@ class AnimalIngressView(APIView):
                         return Response({'error': 'No se encontró el corral especificado'}, status=404)
                     if Troop.objects.filter(troop_number=troop_num, lot=lot).exists():
                         return Response({'error': f'Ya hay una tropa con el numero {troop_num} en el lote {lot.lot_number}'}, status=404)
-                    if corral.troop is not None:
+                    if corral.troop_id is not None:
                         return Response({'error': f'El corral {corral.corral_number} del lote {lot.lot_number} ya tiene animales ingresados'}, status=404)
                     troop = Troop.objects.create(
                         troop_number=troop_num,
@@ -108,9 +108,9 @@ class AnimalIngressView(APIView):
                     )
                     for i in range(quantity):
                         Animal.objects.create(
-                            troop=troop,
+                            troop_id=troop,
                         )
-                    Corral.objects.filter(corral_number=corral_num).update(troop=troop)
+                    Corral.objects.filter(corral_number=corral_num).update(troop_id=troop)
                 
                 return Response({'message': 'Los animales se han ingresado con éxito'}, status=200) 
 

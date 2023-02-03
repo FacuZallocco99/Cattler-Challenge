@@ -16,9 +16,9 @@ class Troop(models.Model):
 class Animal(models.Model):
     caravan_number = models.PositiveIntegerField(unique=True, null=True, blank=True)
     RFID_number = models.PositiveIntegerField(null=True, blank=True)
-    troop = models.ForeignKey(Troop, on_delete=models.CASCADE)
+    troop_id = models.ForeignKey(Troop, on_delete=models.CASCADE)
 
 
 class Corral(models.Model):
     corral_number = models.AutoField(primary_key=True)
-    troop = models.OneToOneField(Troop, on_delete=models.SET_NULL, null=True, blank=True)
+    troop_id = models.OneToOneField(Troop, on_delete=models.SET_NULL, null=True, blank=True)
