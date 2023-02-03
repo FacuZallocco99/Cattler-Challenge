@@ -80,43 +80,39 @@ class AnimalIngressView(APIView):
             with transaction.atomic(): # Cabe aclarar que SQLite es un motor de base de datos ligero y no admite transacciones completas o atomicas. Esto significa que transaction.atomic() no funcionará como se espera. 
                 lot = request.data.get('lote')
                 ingresses = request.data.get('ingresos')
-                if isinstance(lot,int) and isinstance(ingresses, list):
-                    try:
-                        lot = Lot.objects.get(lot_number=lot)
-                    except Lot.DoesNotExist:
-                        return Response({'error': 'No se encontro el lote especificado'}, status=404)
-                    for ingress in ingresses:
-                        corral_num = ingress.get('corral')
-                        quantity = ingress.get('cantidad')
-                        troop_num = random.randint(1,100) # Ya que no se especifica que hacer con el numero de tropa se lo asigna de manera random
-                        if isinstance(corral_num,int) and isinstance(quantity,int):
-                            if quantity <= 0:
-                                return Response({'error': 'La cantidad a ingresar no puede ser cero'}, status=404)
-                            try:
-                                corral = Corral.objects.get(corral_number=corral_num)
-                            except Corral.DoesNotExist:
-                                return Response({'error': 'No se encontró el corral especificado'}, status=404)
-                            
-                            troop_exists = Troop.objects.filter(troop_number=troop_num, lot=lot).exists()
-                            if troop_exists:
-                                return Response({'error': 'Ya hay una tropa con ese numero en ese lote'}, status=404)
-                            if corral.troop is None:
-                                troop = Troop.objects.create(
-                                    troop_number=troop_num,
-                                    lot=lot
-                                )
-                                for i in range(quantity):
-                                    Animal.objects.create(
-                                        troop=troop,
-                                    )
-                                Corral.objects.filter(corral_number=corral_num).update(troop=troop)
-                            else:
-                                return Response({'error': 'El corral ya tiene animales ingresados'}, status=404)
-                        else:
-                            return Response({'error': 'Corral o cantidad erroneos'}, status=404)
-
-                    return Response({'message': 'Los animales se han ingresado con éxito'}, status=200) 
-                else:
+                if not (isinstance(lot,int) and isinstance(ingresses, list)):
                     return Response({'error': 'No se proporcionaron todos los datos necesarios para el ingreso de animales'}, status=404)
+                try:
+                    lot = Lot.objects.get(lot_number=lot)
+                except Lot.DoesNotExist:
+                    return Response({'error': 'No se encontro el lote especificado'}, status=404)
+                for ingress in ingresses:
+                    corral_num = ingress.get('corral')
+                    quantity = ingress.get('cantidad')
+                    troop_num = random.randint(1,2) # Ya que no se especifica que hacer con el numero de tropa se lo asigna de manera random
+                    if not (isinstance(corral_num,int) and isinstance(quantity,int)):
+                        return Response({'error': 'Corral o cantidad erroneos'}, status=404)
+                    if quantity <= 0:
+                        return Response({'error': 'La cantidad a ingresar no puede ser cero'}, status=404)
+                    try:
+                        corral = Corral.objects.get(corral_number=corral_num)
+                    except Corral.DoesNotExist:
+                        return Response({'error': 'No se encontró el corral especificado'}, status=404)
+                    if Troop.objects.filter(troop_number=troop_num, lot=lot).exists():
+                        return Response({'error': f'Ya hay una tropa con el numero {troop_num} en el lote {lot.lot_number}'}, status=404)
+                    if corral.troop is not None:
+                        return Response({'error': f'El corral {corral.corral_number} del lote {lot.lot_number} ya tiene animales ingresados'}, status=404)
+                    troop = Troop.objects.create(
+                        troop_number=troop_num,
+                        lot=lot
+                    )
+                    for i in range(quantity):
+                        Animal.objects.create(
+                            troop=troop,
+                        )
+                    Corral.objects.filter(corral_number=corral_num).update(troop=troop)
+                
+                return Response({'message': 'Los animales se han ingresado con éxito'}, status=200) 
+
         except:
-            return Response({'error': 'Se ha producido un error'}, status=404)
+            return Response({'message': 'No se pudo ingresar los animales'}, status=404)
